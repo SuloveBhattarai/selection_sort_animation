@@ -1,0 +1,60 @@
+.title {
+    margin: 0;
+    font-size: 18px;
+    font-weight: bold;
+    color: #f9f9f9;
+    letter-spacing: 1px;
+}
+
+body {
+    margin: 0;
+    padding: 40px 0;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    /* horizontal */
+    align-items: center;
+    /* vertical  ← must be center, not flex-end */
+    background: #1e1e2e;
+    color: #cdd6f4;
+    font-family: Arial, sans-serif;
+    box-sizing: border-box;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* Keeps the chart, buttons, and text neatly centered together */
+    gap: 16px;
+}
+
+#chart {
+    width: 420px;
+    height: 60px;
+}
+
+.controls {
+    display: flex;
+    gap: 12px;
+}
+
+button {
+    padding: 8px 16px;
+    font-size: 16px;
+    color: #cdd6f4;
+    border: 1px solid #45475a;
+    background: #313244;
+    cursor: pointer;
+    border-radius: 6px;
+    transition: background-color 0.2s;
+}
+
+button:hover {
+    background: #45475a;
+}
+
+button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
