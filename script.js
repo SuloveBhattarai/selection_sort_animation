@@ -217,4 +217,4 @@ function buildStates(current, minIdx, compareIdx, sortedBoundary) {
     });
 }
 
-window.addEventListener("message", e => console.log("Caught:", e.data));
+//window.addEventListener("message", e => console.log("Caught:", e.data));
