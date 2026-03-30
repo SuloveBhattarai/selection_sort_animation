@@ -183,10 +183,17 @@ async function selectionSort() {
             parent.insertBefore(nodes[min], temp);
             parent.insertBefore(temp, nodes[min].nextSibling);
 
-            // i is now sorted (green), min goes back to unsorted (cyan)
             const states = numbers.map((_, idx) => {
-                if (idx < i) return "sorted";
-                if (idx === i) return "sorted";
+                if (idx <= i) return "sorted";
+                return "default";
+            });
+            updateBars(numbers, states);
+            await sleep(1000);
+            if (cancelFlag) return;
+        } else {
+            // no swap needed but still pause before next comparison
+            const states = numbers.map((_, idx) => {
+                if (idx <= i) return "sorted";
                 return "default";
             });
             updateBars(numbers, states);
