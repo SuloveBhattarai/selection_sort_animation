@@ -20,6 +20,7 @@ const randomizeBtn = document.getElementById("randomizeBtn");
 drawStaticBox();
 drawNumbers(numbers);
 
+//Play button
 playBtn.addEventListener("click", async () => {
     if (isAnimating) return;
 
@@ -42,6 +43,7 @@ playBtn.addEventListener("click", async () => {
     randomizeBtn.disabled = false;
 });
 
+// Functionality of randomize button
 randomizeBtn.addEventListener("click", () => {
     if (isAnimating) return;
 
@@ -58,6 +60,7 @@ function generateRandomNumbers() {
     return Array.from({ length: cols }, () => Math.floor(Math.random() * 100));
 }
 
+//Outer rectangular box and grid lines
 function drawStaticBox() {
     svg
         .append("rect")
@@ -79,6 +82,7 @@ function drawStaticBox() {
     }
 }
 
+// Numbers
 function drawNumbers(data) {
     svg
         .selectAll(".num")
@@ -96,6 +100,7 @@ function drawNumbers(data) {
         .text(d => d);
 }
 
+//Update array with new numbers
 function redrawNumbers(data) {
     svg
         .selectAll(".num")
@@ -141,6 +146,7 @@ async function swapAnimation(i, min) {
     ]);
 }
 
+//Selection Sort
 async function selectionSort() {
     for (let i = 0; i < numbers.length - 1; i++) {
         let min = i;
