@@ -17,11 +17,13 @@ const replayBtn = document.getElementById("replayBtn");
 
 drawBars(numbers);
 
+// kick off sort
 playBtn.addEventListener("click", () => {
     window.parent?.postMessage({ eventType: "play", timestamp: Date.now() }, "*");
     startSort();
 });
 
+// cancel ongoing sort and restart from beginning
 replayBtn.addEventListener("click", () => {
     window.parent?.postMessage({ eventType: "replay", timestamp: Date.now() }, "*");
     if (!isAnimating) {
@@ -31,6 +33,7 @@ replayBtn.addEventListener("click", () => {
     cancelFlag = true;
 });
 
+// reset with fresh numbers and disable replay
 randomizeBtn.addEventListener("click", () => {
     window.parent?.postMessage({ eventType: "randomize", timestamp: Date.now() }, "*");
     if (isAnimating) {
@@ -49,6 +52,7 @@ randomizeBtn.addEventListener("click", () => {
     replayBtn.disabled = true;
 });
 
+// manages animation state, saves snapshot for replay, handles cancel and restart
 async function startSort() {
     if (isAnimating) return;
     isAnimating = true;
@@ -74,10 +78,12 @@ async function startSort() {
     }
 }
 
+// random numbers generation 
 function generateRandomNumbers() {
     return Array.from({ length: cols }, () => Math.floor(Math.random() * 91) + 5);
 }
 
+// maps sort state to a color
 function barColor(state) {
     if (state === "sorted") return "#00E676";
     if (state === "current") return "#FFEA00";
@@ -86,6 +92,7 @@ function barColor(state) {
     return "#00E5FF";
 }
 
+// renders bars and labels 
 function drawBars(data) {
     svg.selectAll(".bar-group").remove();
     const groups = svg.selectAll(".bar-group")
@@ -111,6 +118,7 @@ function drawBars(data) {
         .text(d => d);
 }
 
+// updates bar positions, heights and colors
 function updateBars(data, states) {
     svg.selectAll(".bar-group").data(data).each(function (d, i) {
         d3.select(this).select(".bar")
@@ -130,6 +138,7 @@ function sleep(ms) {
     return new Promise(r => setTimeout(r, ms));
 }
 
+// animates two bars sliding into each other's positions
 async function swapAnimation(i, min) {
     const xi = i * colWidth + paddingX;
     const xmin = min * colWidth + paddingX;
@@ -148,6 +157,7 @@ async function swapAnimation(i, min) {
     ]);
 }
 
+// core sort loop, checks cancelFlag at every step to support mid-sort interruption
 async function selectionSort() {
     for (let i = 0; i < numbers.length - 1; i++) {
         if (cancelFlag) return;
@@ -177,25 +187,20 @@ async function selectionSort() {
             if (cancelFlag) return;
             [numbers[i], numbers[min]] = [numbers[min], numbers[i]];
 
+            // reorder DOM nodes to match swapped array so colors apply correctly
             const nodes = svg.selectAll(".bar-group").nodes();
             const parent = svg.node();
             const temp = nodes[i];
             parent.insertBefore(nodes[min], temp);
             parent.insertBefore(temp, nodes[min].nextSibling);
 
-            const states = numbers.map((_, idx) => {
-                if (idx <= i) return "sorted";
-                return "default";
-            });
+            const states = numbers.map((_, idx) => idx <= i ? "sorted" : "default");
             updateBars(numbers, states);
             await sleep(1000);
             if (cancelFlag) return;
         } else {
-            // no swap needed but still pause before next comparison
-            const states = numbers.map((_, idx) => {
-                if (idx <= i) return "sorted";
-                return "default";
-            });
+            // already in place, mark sorted and pause before next pass
+            const states = numbers.map((_, idx) => idx <= i ? "sorted" : "default");
             updateBars(numbers, states);
             await sleep(1000);
             if (cancelFlag) return;
@@ -207,6 +212,7 @@ async function selectionSort() {
     }
 }
 
+// builds a state array for coloring based on current sort positions
 function buildStates(current, minIdx, compareIdx, sortedBoundary) {
     return numbers.map((_, i) => {
         if (i < sortedBoundary) return "sorted";
