@@ -15,8 +15,52 @@
 
         <div class="controls">
             <button id="playBtn">Play</button>
-            <button id="replayBtn" disabled>Replay</button>
             <button id="randomizeBtn">Randomize</button>
+        </div>
+
+        <div class="legend">
+            <div class="legend-item">
+                <svg width="18" height="18">
+                    <defs>
+                        <pattern id="leg-sorted" patternUnits="userSpaceOnUse" width="6" height="6">
+                            <rect width="6" height="6" fill="#00E676" />
+                            <line x1="0" y1="3" x2="6" y2="3" stroke="rgba(0,0,0,0.25)" stroke-width="1.5" />
+                        </pattern>
+                        <pattern id="leg-min" patternUnits="userSpaceOnUse" width="6" height="6">
+                            <rect width="6" height="6" fill="#FF1744" />
+                            <line x1="0" y1="6" x2="6" y2="0" stroke="rgba(0,0,0,0.3)" stroke-width="1.5" />
+                        </pattern>
+                        <pattern id="leg-compare" patternUnits="userSpaceOnUse" width="6" height="6">
+                            <rect width="6" height="6" fill="#FF00FF" />
+                            <circle cx="3" cy="3" r="1.2" fill="rgba(0,0,0,0.3)" />
+                        </pattern>
+                        <pattern id="leg-default" patternUnits="userSpaceOnUse" width="6" height="6">
+                            <rect width="6" height="6" fill="#00E5FF" />
+                            <line x1="3" y1="0" x2="3" y2="6" stroke="rgba(0,0,0,0.18)" stroke-width="1.5" />
+                        </pattern>
+                    </defs>
+                    <rect width="18" height="18" rx="3" fill="url(#leg-sorted)" />
+                </svg>
+                <span>Sorted</span>
+            </div>
+            <div class="legend-item">
+                <svg width="18" height="18">
+                    <rect width="18" height="18" rx="3" fill="url(#leg-min)" />
+                </svg>
+                <span>Smallest</span>
+            </div>
+            <!-- <div class="legend-item">
+                <svg width="18" height="18">
+                    <rect width="18" height="18" rx="3" fill="url(#leg-compare)" />
+                </svg>
+                <span>Comparing</span>
+            </div> -->
+            <div class="legend-item">
+                <svg width="18" height="18">
+                    <rect width="18" height="18" rx="3" fill="url(#leg-default)" />
+                </svg>
+                <span>Unsorted</span>
+            </div>
         </div>
     </div>
 

@@ -12,9 +12,7 @@ body {
     min-height: 100vh;
     display: flex;
     justify-content: center;
-    /* horizontal */
     align-items: center;
-    /* vertical  ← must be center, not flex-end */
     background: #1e1e2e;
     color: #cdd6f4;
     font-family: Arial, sans-serif;
@@ -25,13 +23,13 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    /* Keeps the chart, buttons, and text neatly centered together */
     gap: 16px;
 }
 
 #chart {
     width: 420px;
-    height: 190px;
+    height: 220px;
+    /* extra height for arrow labels above bars */
 }
 
 .controls {
@@ -57,4 +55,24 @@ button:hover {
 button:disabled {
     opacity: 0.5;
     cursor: not-allowed;
+}
+
+/* Legend */
+.legend {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    color: #a6adc8;
+}
+
+.legend-item svg {
+    flex-shrink: 0;
 }
